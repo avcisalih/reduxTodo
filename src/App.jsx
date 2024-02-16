@@ -1,7 +1,23 @@
+import { useEffect } from "react";
 import AddForm from "./AddForm";
 import ListTodos from "./ListTodos";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { setTodos } from "./redux/actions/todoActions";
 
-function App() {
+axios.defaults.baseURL = "http://localhost:3050";
+
+const App = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    //apiden todo verilerini al
+    axios
+      .get("/todos")
+      //ve stora aktar
+      .then((res) => dispatch(setTodos(res.data)));
+  }, []);
+
   return (
     <div className="vh-100">
       <div className="container p-5">
@@ -13,6 +29,6 @@ function App() {
       </div>
     </div>
   );
-}
+};
 
 export default App;

@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import Modal from "./Modal";
 import { ActionTypes } from "./redux/actionTypes/actionTypes";
+import axios from "axios";
+import { deleteTodo, updateTodo } from "./redux/actions/todoActions";
 
 const TodoCard = ({ todo }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -14,18 +16,19 @@ const TodoCard = ({ todo }) => {
     //todo objesinin is_done değerini tersine çevir
     const updated = { ...todo, is_done: !todo.is_done };
 
-    //storu güncelle
-    dispatch({
-      type: ActionTypes.UPDATE,
-      payload: updated,
-    });
+    // api todoyu güncelle
+    axios
+      .put(`todos/${updated.id}`, updated)
+      //storu güncelle
+      .then(() => dispatch(updateTodo(updated)));
   };
   //silme aksiyonunu tetikler
   const handleDelete = () => {
-    dispatch({
-      type: ActionTypes.DELETE,
-      payload: todo.id,
-    });
+    //apiden sil
+    axios
+      .delete(`/todos/${todo.id}`)
+      //storu güncelle
+      .then(() => dispatch(deleteTodo(todo.id)));
   };
 
   return (

@@ -1,5 +1,7 @@
 import { useDispatch } from "react-redux";
 import { ActionTypes } from "./redux/actionTypes/actionTypes";
+import { updateTodo } from "./redux/actions/todoActions";
+import axios from "axios";
 
 const Modal = ({ close, todo }) => {
   const dispatch = useDispatch();
@@ -14,9 +16,13 @@ const Modal = ({ close, todo }) => {
     const updated = { ...todo, text: text };
     //3. storu güncelle
 
-    dispatch({ type: ActionTypes.UPDATE, payload: updated });
+    axios
+      .patch(`/todos/${updated.id}`, { text })
 
-    //4. modali kapat
+      // 4. storu güncelle
+      .then(() => dispatch(updateTodo(updated)));
+
+    //5. modali kapat
     close();
   };
   return (

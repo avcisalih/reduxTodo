@@ -48,6 +48,10 @@ const todoReducer = (state = initialState, action) => {
       // reducer da tutulan todos u güncelle
       return { todos: updated };
 
+    //type set olan aksiyon tetiklenirse
+    case ActionTypes.SET:
+      return { todos: action.payload };
+
     default:
       return state;
   }
