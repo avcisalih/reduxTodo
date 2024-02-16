@@ -52,4 +52,4 @@ Bu proje, React ve Redux kullanılarak geliştirilmiş bir CRUD (Create, Read, U
 
 ## Ekran Görüntüsü
 
-![](crud.gif)
+![](cr.gif)
